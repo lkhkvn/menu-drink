@@ -3,409 +3,613 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bagabliss Digital Menu Pro</title>
+    <title>Bagabliss Coffee - Full Responsive Menu</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Montserrat:wght@700;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;700&family=Dancing+Script:wght@700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --cream-bg: #fdfaf5;
+        --cream-dark: #f4eee0;
+        --coffee-brown: #3e2723;
+        --accent-gold: #c6a664;
+        --text-soft: #5d4037;
+        --transition-speed: 0.8s;
+      }
+
+      body,
+      html {
+        height: 100%;
+        width: 100%;
+        font-family: "Montserrat", sans-serif;
+        background-color: var(--cream-bg);
+        overflow: hidden; /* Slider cố định trên PC/TV */
+      }
+
+      /* Nền sóng mềm mại */
+      .wave-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        opacity: 0.4;
+        pointer-events: none;
+      }
+
+      .wave-container svg {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .price-tag {
+        display: inline-block;
+
+        font-size: clamp(1.5rem, 5vw, 2.5rem);
+
+        font-weight: 700;
+
+        color: white;
+
+        background: var(--coffee-brown);
+
+        padding: 8px 25px;
+
+        border-radius: 50px;
+
+        box-shadow: 0 10px 20px rgba(62, 39, 35, 0.2);
+      }
+
+      .price-tag-1 {
+        display: inline-block;
+
+        font-size: clamp(1rem, 1vw, 2rem);
+
+        font-weight: 700;
+
+        color: white;
+
+        background: var(--coffee-brown);
+
+        padding: 8px 25px;
+
+        border-radius: 50px;
+
+        box-shadow: 0 10px 20px rgba(62, 39, 35, 0.2);
+      }
+
+      /* --- CONTAINER CHÍNH --- */
+      .menu-slider {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+      }
+
+      .menu-item {
+        position: absolute;
+        width: 90%;
+        max-width: 1500px; /* Phóng rộng hơn cho màn hình TV */
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        opacity: 0;
+        transform: scale(0.95) translateY(30px);
+        transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+        pointer-events: none;
+        gap: 5vw;
+      }
+
+      .menu-item.active {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        pointer-events: auto;
+      }
+
+      /* --- NỘI DUNG VĂN BẢN --- */
+      .item-info {
+        flex: 1.2;
+        color: var(--coffee-brown);
+        z-index: 3;
+        padding-left: 2%;
+      }
+
+      .brand-label {
+        font-family: "Dancing Script", cursive;
+        font-size: clamp(1.5rem, 3vw, 2.8rem);
+        color: var(--accent-gold);
+        margin-bottom: 10px;
+        display: block;
+      }
+
+      .item-title {
+        font-family: "Playfair Display", serif;
+        /* Phóng to cực đại cho màn hình 40 inch */
+        font-size: clamp(2.8rem, 8vw, 8.5rem);
+        margin: 0;
+        line-height: 1;
+        text-transform: uppercase;
+        font-weight: 900;
+        letter-spacing: -2px;
+      }
+
+      .item-description {
+        /* Kích thước chữ mô tả linh hoạt */
+        font-size: clamp(1rem, 2vw, 1.8rem);
+        margin: 25px 0 40px 0;
+        color: var(--text-soft);
+        max-width: 650px;
+        line-height: 1.5;
+        font-weight: 400;
+      }
+
+      /* Nút Giá Tiền (Button Style) */
+      .price-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 20px;
+        background: var(--coffee-brown);
+        color: white;
+        padding: clamp(10px, 2vh, 20px) clamp(30px, 4vw, 60px);
+        border-radius: 100px;
+        border: none;
+        box-shadow: 0 20px 40px rgba(62, 39, 35, 0.25);
+        font-family: "Montserrat", sans-serif;
+        font-weight: 800;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .price-tag:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 25px 50px rgba(62, 39, 35, 0.4);
+      }
+
+      .price-label {
+        font-size: clamp(0.9rem, 1.5vw, 1.4rem);
+        text-transform: uppercase;
+        opacity: 0.8;
+        letter-spacing: 1px;
+      }
+
+      .price-value {
+        font-size: clamp(1.8rem, 4vw, 4.5rem);
+        border-left: 1px solid rgba(255, 255, 255, 0.3);
+        padding-left: 20px;
+      }
+
+      /* --- HÌNH ẢNH --- */
+      .item-image-wrapper {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+      }
+
+      .image-bloom {
+        position: absolute;
+        /* Vòng sáng tỏa ra phía sau */
+        width: clamp(250px, 45vw, 750px);
+        height: clamp(250px, 45vw, 750px);
+        background: radial-gradient(
+          circle,
+          rgba(198, 166, 100, 0.25) 0%,
+          rgba(253, 250, 245, 0) 70%
+        );
+        border-radius: 50%;
+        z-index: -1;
+        animation: pulse 4s infinite ease-in-out;
+      }
+
+      .drink-img {
+        max-width: 100%;
+        /* Không vượt quá chiều cao màn hình */
+        max-height: clamp(350px, 70vh, 900px);
+        object-fit: contain;
+        filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.2));
+        animation: float 6s infinite ease-in-out;
+      }
+
+      /* --- ĐIỀU HƯỚNG --- */
+      .nav-buttons {
+        position: absolute;
+        bottom: 5vh;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 25px;
+        z-index: 100;
+      }
+
+      .nav-btn {
+        background: white;
+        border: 2px solid var(--cream-dark);
+        width: clamp(60px, 6vw, 90px);
+        height: clamp(60px, 6vw, 90px);
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: var(--coffee-brown);
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+      }
+
+      .nav-btn:hover {
+        background: var(--coffee-brown);
+        color: white;
+        transform: translateY(-5px);
+      }
+
+      /* --- RESPONSIVE CHO TỪNG LOẠI MÀN HÌNH --- */
+
+      /* 1. MÀN HÌNH CỰC LỚN (TV 40 INCH+) */
+      @media (min-width: 1900px) {
+        .menu-item {
+          max-width: 1700px;
+          gap: 10vw;
+        }
+        .price-tag {
+          border-width: 4px;
+        }
+        .nav-buttons {
+          bottom: 8vh;
+        }
+      }
+
+      /* 2. LAPTOP 15.6 INCH (1366px - 1536px) */
+      @media (max-width: 1600px) and (min-width: 1025px) {
+        .menu-item {
+          width: 85%;
+        }
+        .drink-img {
+          max-height: 65vh;
+        }
+      }
+
+      /* 3. TABLET & MOBILE (Dưới 1024px) */
+      @media (max-width: 1024px) {
+        body,
+        html {
+          overflow-y: auto;
+        }
+
+        .menu-item {
+          flex-direction: column-reverse; /* Ảnh trên, chữ dưới cho mobile */
+          text-align: center;
+          justify-content: center;
+          padding: 100px 20px 150px 20px;
+          height: auto;
+          position: relative;
+          opacity: 1; /* Hiển thị dạng danh sách nếu không dùng JS slider */
+          transform: none;
+          margin: 0 auto;
+        }
+
+        .item-info {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding-left: 0;
+        }
+
+        .item-description {
+          margin: 20px auto;
+          max-width: 90%;
+        }
+
+        .item-image-wrapper {
+          margin-bottom: 40px;
+          width: 100%;
+        }
+
+        .drink-img {
+          max-height: 45vh;
+        }
+
+        .nav-buttons {
+          position: fixed;
+          bottom: 20px;
+          background: rgba(253, 250, 245, 0.9);
+          padding: 10px 30px;
+          border-radius: 50px;
+          backdrop-filter: blur(10px);
+        }
+      }
+
+      /* --- ANIMATIONS --- */
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-25px) rotate(2deg);
+        }
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.4;
+        }
+        50% {
+          transform: scale(1.15);
+          opacity: 0.7;
+        }
+      }
+
+      /* Trang cuối cùng (Trang cảm ơn/Logo) */
+      .menu-item:last-of-type {
+        background-color: white !important;
+        justify-content: center;
+      }
+    </style>
   </head>
   <body>
-    <div class="menu-container" id="mainContainer">
-      <div class="wave-bg">
-        <svg
-          viewBox="0 0 1440 800"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            opacity="0.4"
-            d="M0 0H1440V400C1440 400 1200 600 720 400C240 200 0 600 0 600V0Z"
-            fill="#f1ee3c"
-          />
-          <path
-            opacity="0.6"
-            d="M0 0H1200C1200 0 1000 300 600 150C200 0 0 400 0 400V0Z"
-            fill="#e5f312"
-          />
-          <path
-            d="M0 0H900C900 0 750 450 450 250C150 50 0 550 0 550V0Z"
-            fill="#e5f312"
-          />
-        </svg>
-      </div>
-
-      <video class="bg-video" autoplay muted loop>
-        <source
-          src="https://assets.mixkit.co/videos/preview/mixkit-cooking-sauce-in-a-pan-close-up-4521-large.mp4"
-          type="video/mp4"
+    <div class="wave-container">
+      <svg
+        viewBox="0 0 1440 800"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M0 0H1440V400C1440 400 1200 500 720 400C240 300 0 500 0 500V0Z"
+          fill="#F4EEE0"
         />
-      </video>
-      <div class="overlay"></div>
-
-      <div class="menu-item active">
-        <div class="content">
-          <h2 class="title">Roast Pork Roll</h2>
-          <p class="description">
-           with cucumber,  carrot, butter, pate and traditional VietNam source
-          </p>
-          <div class="price-box">
-            <span class="price">$10.00</span>
-            <div class="order-info">
-            </div>
-          </div>
-        </div>
-        <div class="image-box floating">
-          <div class="ripple-container">
-            <div class="ripple"></div>
-            <div class="ripple"></div>
-            <div class="ripple"></div>
-          </div>
-          <div class="blob-shape"></div>
-          <img src="banh-mi-heo-quay.png" alt="Classic Burger" />
-        </div>
-      </div>
-
-      <div class="menu-item">
-        <div class="content">
-          <h2 class="title">Shumai roll</h2>
-          <p class="description">Meatballs pork, cucumber, carrots, coriander and special tomato source</p>
-          <div class="price-box">
-            <span class="price">$10.00</span>
-            <div class="order-info">
-              
-            </div>
-          </div>
-        </div>
-        <div class="image-box floating">
-          <div class="ripple-container">
-            <div class="ripple"></div>
-            <div class="ripple"></div>
-            <div class="ripple"></div>
-          </div>
-          <div class="blob-shape"></div>
-          <img src="xiumai.png" alt="Schnitbel Burger" />
-        </div>
-      </div>
-
-      <div class="menu-item">
-        <div class="content">
-          <h2 class="title">Soft Pork Roll</h2>
-          <p class="description">
-            Tender and juicy Pork, with gravy and crackle
-          </p>
-          <div class="price-box">
-            <span class="price">$10.00</span>
-            <div class="order-info">
-             
-            </div>
-          </div>
-        </div>
-        <div class="image-box floating">
-          <div class="ripple-container">
-            <div class="ripple"></div>
-            <div class="ripple"></div>
-            <div class="ripple"></div>
-          </div>
-          <div class="blob-shape"></div>
-          <img src="Roast-beef-roll.png" alt="Roast Beef Roll" />
-        </div>
-      </div>
-
-      <div class="menu-item">
-        <div class="content">
-          <h2 class="title">Soft Beef Roll</h2>
-          <p class="description">
-            Juicy beef with gravy !
-          </p>
-          <div class="price-box">
-            <span class="price">$10.00</span>
-            <div class="order-info">
-             
-            </div>
-          </div>
-        </div>
-        <div class="image-box floating">
-          <div class="ripple-container">
-            <div class="ripple"></div>
-            <div class="ripple"></div>
-            <div class="ripple"></div>
-          </div>
-          <div class="blob-shape"></div>
-          <img src="Roast-beef-roll-removebg-preview.png" alt="Roast Beef Roll" />
-        </div>
-      </div>
-
-       <div class="menu-item">
-        <div class="content">
-          <h2 class="title-1">Vietnam Roll</h2>
-          <p class="description">
-            Any meat of your choice with butter, Pate, Chilli, Cucumber, Picked
-            Carrots. Coriander sweet sauce and Crackle
-          </p>
-          <div class="price-box">
-            <span class="price">$10.00</span>
-            <div class="order-info">
-              
-            </div>
-          </div>
-        </div>
-        <div class="image-box floating">
-          <div class="ripple-container">
-            <div class="ripple"></div>
-            <div class="ripple"></div>
-            <div class="ripple"></div>
-          </div>
-          <div class="blob-shape"></div>
-          <img src="vietnamess-roll.png" alt="Roast Beef Roll" />
-        </div>
-      </div>
-
-      <div class="menu-item">
-        <div class="content">
-          <h2 class="title">Schnitzel Burger</h2>
-          <p class="description">No cheese 10$</p>
-          <div class="price-box">
-            <span class="price">$11.00</span>
-            <div class="order-info">
-            </div>
-          </div>
-        </div>
-        <div class="image-box floating">
-          <div class="ripple-container">
-            <div class="ripple"></div>
-            <div class="ripple"></div>
-            <div class="ripple"></div>
-          </div>
-          <div class="blob-shape"></div>
-          <img src="chicken-schnitzel-burge.png" alt="Schnitbel Burger" />
-        </div>
-      </div>
-
-      <div class="menu-item">
-        <div class="content">
-          <h2 class="title">BBQ Pork Roll</h2>
-          <p class="description">
-            Sweet BBQ pork roll with hoisin sauce and crackky
-          </p>
-          <div class="price-box">
-            <span class="price">$10.00</span>
-            <div class="order-info">
-            
-            </div>
-          </div>
-        </div>
-        <div class="image-box floating">
-          <div class="ripple-container">
-            <div class="ripple"></div>
-            <div class="ripple"></div>
-            <div class="ripple"></div>
-          </div>
-          <div class="blob-shape"></div>
-          <img src="Bbq-pork-roll.png" alt="Roast Beef Roll" />
-        </div>
-      </div>
-
-      <div class="menu-item">
-        <div class="content">
-          <h2 class="title">BBQ Chicken Roll</h2>
-          <p class="description">
-            BBQ chicken roll with rickled and cucumber and spicy mayo
-          </p>
-          <div class="price-box">
-            <span class="price">$10.00</span>
-            <div class="order-info">
-          
-            </div>
-          </div>
-        </div>
-        <div class="image-box floating">
-          <div class="ripple-container">
-            <div class="ripple"></div>
-            <div class="ripple"></div>
-            <div class="ripple"></div>
-          </div>
-          <div class="blob-shape"></div>
-          <img src="Bbq-chicken-roll.png" alt="Roast Beef Roll" />
-        </div>
-      </div>
-
-      <div class="menu-item">
-        <div class="content">
-          <h2 class="title">Schnitzel Roll</h2>
-          <p class="description">
-            Chicken Schnitzel with lettuce, tomato, and mayo
-          </p>
-          <div class="price-box">
-            <span class="price">$11.00</span>
-            <div class="order-info">
-            </div>
-          </div>
-        </div>
-        <div class="image-box floating">
-          <div class="ripple-container">
-            <div class="ripple"></div>
-            <div class="ripple"></div>
-            <div class="ripple"></div>
-          </div>
-          <div class="blob-shape"></div>
-          <img src="schnitresl-roll.png" alt="Roast Beef Roll" />
-        </div>
-      </div>
-
-      <div class="menu-item">
-        <div class="content">
-          <h2 class="title">Hot Dog and Can</h2>
-          <p class="description">Hot dog with a Can of coke</p>
-          <div class="price-box">
-            <span class="price">$9.00</span>
-            <div class="order-info">
-  
-            </div>
-          </div>
-        </div>
-        <div class="image-box floating">
-          <div class="ripple-container">
-            <div class="ripple"></div>
-            <div class="ripple"></div>
-            <div class="ripple"></div>
-          </div>
-          <div class="blob-shape"></div>
-          <img src="Hot_dog.png" alt="Roast Beef Roll" />
-        </div>
-      </div>
-
-      <div class="menu-item">
-        <div class="content">
-          <h2 class="title">Grilled Pork Roll</h2>
-          <p class="description">
-            Homemade Pork Sausage with butter, pate, chilli, Cucumber, Pickled
-            Carrots, Coriancle, Sweet Sauce and Crackle
-          </p>
-          <div class="price-box">
-            <span class="price">$10.00</span>
-            <div class="order-info">
-          
-            </div>
-          </div>
-        </div>
-        <div class="image-box floating">
-          <div class="ripple-container">
-            <div class="ripple"></div>
-            <div class="ripple"></div>
-            <div class="ripple"></div>
-          </div>
-          <div class="blob-shape"></div>
-          <img src="grilled-pork-roll.png" alt="Grilled Pork Roll" />
-        </div>
-      </div>
-
-      <div class="menu-item">
-        <div class="content">
-          <h2 class="title-1">Sandwich</h2>
-          <p class="description">small $6.00</p>
-          <div class="price-box">
-            <span class="price">$8.00</span>
-            <div class="order-info">
-            </div>
-          </div>
-        </div>
-        <div class="image-box floating">
-          <div class="ripple-container">
-            <div class="ripple"></div>
-            <div class="ripple"></div>
-            <div class="ripple"></div>
-          </div>
-          <div class="blob-shape"></div>
-          <img src="sand-whies.png" alt="Grilled Pork Roll" />
-        </div>
-      </div>
-      
-
-      <div class="menu-item">
-        <div class="content">
-          <h2 class="title">Salad Roll</h2>
-          <p class="description">Any Salad of your choice</p>
-          <div class="price-box">
-            <span class="price">$7.00</span>
-            <div class="order-info">
-
-
-            </div>
-          </div>
-        </div>
-        <div class="image-box floating">
-          <div class="ripple-container">
-            <div class="ripple"></div>
-            <div class="ripple"></div>
-            <div class="ripple"></div>
-          </div>
-          <div class="blob-shape"></div>
-          <img src="salad-roll.png" alt="Salad Roll" />
-        </div>
-      </div>
-
-      <div class="menu-item">
-        <div class="content">
-          <h2 class="title-1">Hamburger</h2>
-          <p class="description">
-            Beef patty, Egg, Cheese, Lettuce, Tomato, Onion and Trio Sauce and bacon
-          </p>
-          <div class="price-box">
-            <span class="price">$10.00</span>
-            <div class="order-info">
-              
-            </div>
-          </div>
-        </div>
-        <div class="image-box floating">
-          <div class="ripple-container">
-            <div class="ripple"></div>
-            <div class="ripple"></div>
-            <div class="ripple"></div>
-          </div>
-          <div class="blob-shape"></div>
-          <img src="hamburge.png" alt="Hamburger" />
-        </div>
-      </div>
-
-      <div class="menu-item">
-        <div class="content">
-          <h2 class="title">Egg and Bacon Bun</h2>
-          <p class="description">No Chess $7.00</p>
-          <div class="price-box">
-            <span class="price">$8.00</span>
-            <div class="order-info">
-              
-            </div>
-          </div>
-        </div>
-        <div class="image-box floating">
-          <div class="ripple-container">
-            <div class="ripple"></div>
-            <div class="ripple"></div>
-            <div class="ripple"></div>
-          </div>
-          <div class="blob-shape"></div>
-          <img src="egg-bacon.png" alt="Egg and Bacon Bun" />
-        </div>
-      </div>
-
-      <div class="menu-item">
-        <div class="ripple-container">
-        <div class="ripple"></div>
-        <div class="ripple"></div>
-        <div class="ripple"></div>
+      </svg>
     </div>
-    <div class="blob-shape"></div>
 
-    <img src="logo.png" alt="Logo" class="main-logo logo-cuoi-trang" />
-  
-</div>
+    <div class="menu-slider">
+      <div class="menu-item active">
+        <div class="item-info">
+          <div class="brand-label">Premium Coffee</div>
+          <h1 class="item-title">Cappuccino</h1>
+          <p class="item-description">
+            A smooth, creamy coffee with frothy milk.
+          </p>
+          <div class="price-tag-1">
+            Small $4.00 <br />
+            Medium $4.50 <br />
+            Large $5.00
+          </div>
+        </div>
+        <div class="item-image-wrapper">
+          <div class="image-bloom"></div>
+          <img
+            src="capuchino-removebg-preview.png"
+            alt="Cappuccino"
+            class="drink-img"
+          />
+        </div>
+      </div>
 
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="brand-label">Premium Coffee</div>
+          <h1 class="item-title">Latte</h1>
+          <p class="item-description">
+            A creamy coffee drink with lots of milk.
+          </p>
+          <div class="price-tag-1">
+            Small $4.00 <br />
+            Medium $4.50 <br />
+            Large $5.00
+          </div>
+        </div>
+        <div class="item-image-wrapper">
+          <div class="image-bloom"></div>
+          <img src="latte.png" alt="Latte" class="drink-img" />
+        </div>
+      </div>
 
-   
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="brand-label">Premium Coffee</div>
+          <h1 class="item-title">Macchiato</h1>
+          <p class="item-description">
+            A strong espresso marked with a little milk.
+          </p>
+          <div class="price-tag-1">
+            Small $4.00 <br />
+            Medium $4.50 <br />
+            Large $5.00
+          </div>
+        </div>
+        <div class="item-image-wrapper">
+          <div class="image-bloom"></div>
+          <img src="machiato.png" alt="Macchiato" class="drink-img" />
+        </div>
+      </div>
 
-    <script src="script.js"></script>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="brand-label">Premium Coffee</div>
+          <h1 class="item-title">Mocha</h1>
+          <p class="item-description">
+            A chocolate-flavored coffee drink with creamy milk.
+          </p>
+          <div class="price-tag-1">
+            Small $4.00 <br />
+            Medium $4.50 <br />
+            Large $5.00
+          </div>
+        </div>
+        <div class="item-image-wrapper">
+          <div class="image-bloom"></div>
+          <img src="mocha.png" alt="Mocha" class="drink-img" />
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="brand-label">Premium Coffee</div>
+          <h1 class="item-title">Short / Long Black</h1>
+          <p class="item-description">Authentic espresso experience.</p>
+          <div class="price-tag">$5.00</div>
+        </div>
+        <div class="item-image-wrapper">
+          <div class="image-bloom"></div>
+          <img
+            src="short-long-black.png"
+            alt="Short Long Black"
+            class="drink-img"
+          />
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="brand-label">Hot Drinks</div>
+          <h1 class="item-title">Black Tea</h1>
+          <p class="item-description">
+            A strong tea with bold flavor and aroma.
+          </p>
+          <div class="price-tag-1">
+            Small $4.00 <br />
+            Medium $4.50 <br />
+            Large $5.00
+          </div>
+        </div>
+        <div class="item-image-wrapper">
+          <div class="image-bloom"></div>
+          <img src="blacktea.png" alt="Black Tea" class="drink-img" />
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="brand-label">Hot Drinks</div>
+          <h1 class="item-title">White Tea</h1>
+          <p class="item-description">Gentle and refreshing taste.</p>
+          <div class="price-tag">$5.00</div>
+        </div>
+        <div class="item-image-wrapper">
+          <div class="image-bloom"></div>
+          <img src="white-tea.png" alt="White Tea" class="drink-img" />
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="brand-label">Hot Drinks</div>
+          <h1 class="item-title">Chai Latte</h1>
+          <p class="item-description">Spiced tea blended with milk.</p>
+          <div class="price-tag">$5.00</div>
+        </div>
+        <div class="item-image-wrapper">
+          <div class="image-bloom"></div>
+          <img src="c.png" alt="Chai Latte" class="drink-img" />
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="brand-label">Milk Shakes</div>
+          <h1 class="item-title">Flavours</h1>
+          <p class="item-description">
+            Choc, Strawberry, Banana, Lime, Caramel, Blue Heaven
+          </p>
+          <div class="price-tag">$8.00</div>
+        </div>
+        <div class="item-image-wrapper">
+          <div class="image-bloom"></div>
+          <img src="milkshake.png" alt="Milk Shake" class="drink-img" />
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="brand-label">Iced Drinks</div>
+          <h1 class="item-title">Iced Coffee</h1>
+          <p class="item-description">Chilled coffee with a smooth finish.</p>
+          <div class="price-tag">$8.00</div>
+        </div>
+        <div class="item-image-wrapper">
+          <div class="image-bloom"></div>
+          <img src="iced-coffe.png" alt="Iced Coffee" class="drink-img" />
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="brand-label">Iced Drinks</div>
+          <h1 class="item-title">Iced Chocolate</h1>
+          <p class="item-description">Rich and creamy iced chocolate.</p>
+          <div class="price-tag">$8.00</div>
+        </div>
+        <div class="item-image-wrapper">
+          <div class="image-bloom"></div>
+          <img
+            src="iced-chocolate.png"
+            alt="Iced Chocolate"
+            class="drink-img"
+          />
+        </div>
+      </div>
+
+    
+
+    <script>
+      let currentSlide = 0;
+      const items = document.querySelectorAll(".menu-item");
+      let slideInterval = setInterval(nextSlide, 5000);
+
+      function showSlide(index) {
+        items.forEach((item) => item.classList.remove("active"));
+        items[index].classList.add("active");
+      }
+
+      function nextSlide() {
+        currentSlide = (currentSlide + 1) % items.length;
+        showSlide(currentSlide);
+        resetTimer();
+      }
+
+      function prevSlide() {
+        currentSlide = (currentSlide - 1 + items.length) % items.length;
+        showSlide(currentSlide);
+        resetTimer();
+      }
+
+      function resetTimer() {
+        clearInterval(slideInterval);
+        slideInterval = setInterval(nextSlide, 5000);
+      }
+
+      // Hỗ trợ vuốt trên điện thoại
+      let touchstartX = 0;
+      let touchendX = 0;
+
+      document.addEventListener("touchstart", (e) => {
+        touchstartX = e.changedTouches[0].screenX;
+      });
+
+      document.addEventListener("touchend", (e) => {
+        touchendX = e.changedTouches[0].screenX;
+        handleGesture();
+      });
+
+      function handleGesture() {
+        if (touchendX < touchstartX - 50) nextSlide();
+        if (touchendX > touchstartX + 50) prevSlide();
+      }
+    </script>
   </body>
 </html>
